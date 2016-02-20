@@ -19,9 +19,10 @@ for i in range(len(listdir)):
     if not os.path.exists(outpath+name):
         os.makedirs(outpath+name)
     for j in range(len(samples)):
-        retcode = subprocess.call(
-            ["objdump -D -M intel " + fullpath + samples[j] + " > asm.txt"],
+        proc = subprocess.Popen(
+            "objdump -D -M intel " + fullpath + samples[j] + " > asm.txt",
             shell=True, stderr=devnull)
+        proc.wait()
         parse_file(samples[j],name)
         print("    " + fullpath + "/" + samples[j])
 
